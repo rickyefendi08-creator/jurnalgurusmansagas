@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jurnal Mengajar SMAN 1 Bergas</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1d2330;--mu:#667085;--bd:#dfe3ea;--ac:#1f6feb;--ok:#1a7f4b;--ng:#c2410c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151b;--card:#1b1f27;--tx:#e8ebf0;--mu:#98a2b3;--bd:#2d3340;--ac:#5b9bff;--ok:#4ade80;--ng:#fb923c}}
+:root[data-theme="dark"]{--bg:#12151b;--card:#1b1f27;--tx:#e8ebf0;--mu:#98a2b3;--bd:#2d3340;--ac:#5b9bff;--ok:#4ade80;--ng:#fb923c}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:760px;margin:0 auto;padding:14px}
+h1{font-size:20px;margin:6px 0 2px}.sub{color:var(--mu);font-size:13px;margin-bottom:12px}
+nav{display:flex;gap:6px;margin-bottom:12px}
+nav button{flex:1;padding:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;font:inherit;cursor:pointer}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
+label{display:block;font-size:13px;color:var(--mu);margin:10px 0 4px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+textarea{min-height:76px;resize:vertical}
+.r{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{padding:10px 14px;border:0;border-radius:8px;background:var(--ac);color:#fff;font:inherit;cursor:pointer}
+.b.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}.b.d{background:var(--ng)}
+.b.x{padding:6px 10px;font-size:13px}
+.jam{display:flex;flex-wrap:wrap;gap:6px}
+.jam label{margin:0;display:flex;align-items:center;gap:4px;padding:6px 10px;border:1px solid var(--bd);border-radius:8px;color:var(--tx);cursor:pointer}
+.jam input{width:auto}
+.s{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--bd);gap:8px}
+.s:last-child{border:0}
+.p{min-width:46px;padding:6px 10px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font:inherit;font-weight:600;cursor:pointer}
+.p.H{color:var(--ok)}.p.S,.p.I{color:var(--ac)}.p.A{color:var(--ng)}
+.th{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.th div{position:relative}.th img{width:84px;height:84px;object-fit:cover;border-radius:8px;border:1px solid var(--bd)}
+.th button{position:absolute;top:2px;right:2px;border:0;background:#000a;color:#fff;border-radius:50%;width:22px;height:22px;cursor:pointer}
+.mu{color:var(--mu);font-size:13px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.msg{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;max-width:90%}
+.dlg{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:20px;z-index:9}.dlg>div{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:18px;max-width:340px;width:100%}.dlg p{margin:0 0 14px}
+canvas{width:100%;height:170px;border:1px dashed var(--bd);border-radius:8px;background:#fff;touch-action:none;display:block}.ttd{height:70px;background:#fff;border:1px solid var(--bd);border-radius:6px}
+.hid{display:none}.tag{display:inline-block;background:var(--bg);border:1px solid var(--bd);border-radius:6px;padding:1px 8px;font-size:12px;margin-right:4px}
+</style></head><body><div class="w">
+<h1>📒 Jurnal Mengajar SMAN 1 Bergas</h1><div class="sub" id="hd"></div>
+<nav><button data-t="isi" class="on">Isi Jurnal</button><button data-t="riw">Riwayat</button><button data-t="set">Pengaturan</button></nav>
+
+<section id="isi">
+<div class="c">
+<div class="r"><div><label>Tanggal</label><input type="date" id="tgl"></div>
+<div><label>Kelas</label><select id="kls"></select></div></div>
+<label>Jam pelajaran ke-</label><div class="jam" id="jam"></div>
+<label>Materi pembelajaran</label><textarea id="mat" placeholder="Contoh: Pecahan senilai (Bab 3)"></textarea>
+</div>
+<div class="c"><b>Presensi siswa</b> <span class="mu">(ketuk untuk ubah: H=Hadir, S=Sakit, I=Izin, A=Alpa)</span>
+<div class="row" style="margin:8px 0"><button class="b g x" id="allH">Semua Hadir</button><span class="mu" id="rek"></span></div>
+<div id="pres"></div></div>
+<div class="c"><b>Foto kegiatan</b> <span class="mu">(maks. 3, akan masuk ke kolom terakhir Excel)</span>
+<div class="row" style="margin-top:8px"><input type="file" id="fi" accept="image/*" multiple style="display:none"><button class="b g x" id="fb">📷 Tambah foto</button></div><div class="th" id="fth"></div></div>
+<div class="c"><label style="margin-top:0">Catatan pembelajaran</label><textarea id="cat" placeholder="Kendala, siswa yang perlu perhatian, tindak lanjut..."></textarea>
+<label>Tanda tangan guru <span class="mu">(tulis dengan jari di kotak)</span></label><canvas id="sig"></canvas><div class="row" style="margin-top:8px"><button class="b g x" id="sgc">Hapus tanda tangan</button></div></div>
+<button class="b" id="sv" style="width:100%">Simpan Jurnal</button>
+</section>
+
+<section id="riw" class="hid">
+<div class="c"><div class="r"><div><label style="margin-top:0">Dari tanggal</label><input type="date" id="dr"></div><div><label style="margin-top:0">Sampai tanggal</label><input type="date" id="sd"></div></div>
+<div class="row" style="margin-top:10px"><button class="b" id="xl">⬇ Unduh Excel (.xlsx)</button><span class="mu" id="cnt"></span></div></div>
+<div id="lst"></div></section>
+
+<section id="set" class="hid">
+<div class="c"><b>Identitas</b>
+<label>Nama guru</label><input id="gn"><label>Mata pelajaran</label><input id="mp"><label>Sekolah</label><input id="sk"></div>
+<div class="c"><b>Kelas &amp; daftar siswa</b>
+<label>Nama kelas</label><input id="kn" placeholder="Contoh: 7A">
+<label>Daftar siswa (satu nama per baris)</label><textarea id="ks" style="min-height:140px"></textarea>
+<div class="row" style="margin-top:10px"><button class="b" id="kadd">Simpan Kelas</button></div>
+<div id="kl" style="margin-top:12px"></div></div>
+<div class="mu">Data tersimpan di peramban perangkat ini. Unduh Excel secara berkala sebagai cadangan.</div>
+</section></div><div class="dlg hid" id="dlg"><div><p id="dq"></p><div class="row" style="justify-content:flex-end"><button class="b g" id="dn">Batal</button><button class="b d" id="dy">Ya, hapus</button></div></div></div><div class="msg hid" id="msg"></div>
+<script>
+window.addEventListener('error',e=>{const m=document.getElementById('msg');if(m){m.textContent='Error: '+(e.message||'tidak diketahui');m.classList.remove('hid')}});
+const MEM={};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const K='jurnal_mengajar_v1';
+function ask(q,fn){$('dq').textContent=q;$('dlg').classList.remove('hid');$('dn').onclick=()=>$('dlg').classList.add('hid');$('dy').onclick=()=>{$('dlg').classList.add('hid');fn()}}
+let S={guru:'',mapel:'',sekolah:'',kelas:[],jurnal:[]},cur={pres:{},fotos:[]};
+try{const x=localStorage.getItem(K);if(x)S=Object.assign(S,JSON.parse(x))}catch(e){}
+const idb=new Promise((res,rej)=>{try{const r=indexedDB.open('jurnal_foto',1);r.onupgradeneeded=()=>r.result.createObjectStore('f');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}});idb.catch(()=>{});
+const fput=(k,v)=>(MEM[k]=v,idb).then(d=>new Promise((res,rej)=>{const t=d.transaction('f','readwrite');t.objectStore('f').put(v,k);t.oncomplete=res;t.onerror=()=>rej(t.error)}));
+const fget=k=>MEM[k]?Promise.resolve(MEM[k]):idb.then(d=>new Promise((res,rej)=>{const q=d.transaction('f').objectStore('f').get(k);q.onsuccess=()=>res(q.result||[]);q.onerror=()=>rej(q.error)})).catch(()=>[]);
+const fdel=k=>idb.then(d=>{d.transaction('f','readwrite').objectStore('f').delete(k)}).catch(()=>{});
+const comp=f=>new Promise((res,rej)=>{const fr=new FileReader();fr.onerror=rej;fr.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),w=Math.round(im.width*k),h=Math.round(im.height*k),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);res({d:c.toDataURL('image/jpeg',.72),w,h})};im.src=fr.result};fr.readAsDataURL(f)});
+function save(){try{localStorage.setItem(K,JSON.stringify(S));return true}catch(e){if(e&&(e.name==='QuotaExceededError'||e.code===22)){toast('Penyimpanan penuh. Unduh Excel dan hapus entri lama.');return false}if(!save.w){save.w=1;toast('Penyimpanan peramban diblokir: data hanya sementara. Unduh Excel sebelum menutup halaman.')}return true}}
+function toast(t){const m=$('msg');m.textContent=t;m.classList.remove('hid');clearTimeout(toast.t);toast.t=setTimeout(()=>m.classList.add('hid'),3200)}
+const today=()=>{const d=new Date();return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
+const hari=t=>new Date(t+'T00:00').toLocaleDateString('id-ID',{weekday:'long'});
+const tglID=t=>new Date(t+'T00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
+
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
+ ['isi','riw','set'].forEach(s=>$(s).classList.toggle('hid',s!==b.dataset.t));
+ if(b.dataset.t==='riw')renderList();if(b.dataset.t==='set')renderSet();if(b.dataset.t==='isi'){renderForm();sizeSig()}});
+
+function head(){$('hd').textContent=[S.guru,S.mapel,S.sekolah].filter(Boolean).join(' • ')||'Lengkapi identitas di tab Pengaturan'}
+function renderForm(){
+ const k=$('kls'),v=k.value;
+ k.innerHTML=S.kelas.length?S.kelas.map(x=>`<option>${esc(x.n)}</option>`).join(''):'<option value="">(tambah kelas di Pengaturan)</option>';
+ if(v&&S.kelas.some(x=>x.n===v))k.value=v;
+ renderPres()}
+function renderJam(){$('jam').innerHTML=Array.from({length:10},(_,i)=>`<label><input type="checkbox" value="${i+1}">${i+1}</label>`).join('')}
+function siswa(){const k=S.kelas.find(x=>x.n===$('kls').value);return k?k.s:[]}
+function renderPres(){
+ const L=siswa();L.forEach(n=>{if(!cur.pres[n])cur.pres[n]='H'});
+ Object.keys(cur.pres).forEach(n=>{if(!L.includes(n))delete cur.pres[n]});
+ $('pres').innerHTML=L.length?L.map((n,i)=>`<div class="s"><span>${i+1}. ${esc(n)}</span><button class="p ${cur.pres[n]}" data-n="${esc(n)}">${cur.pres[n]}</button></div>`).join(''):'<div class="mu">Belum ada siswa untuk kelas ini.</div>';
+ $('pres').querySelectorAll('.p').forEach(b=>b.onclick=()=>{const n=b.dataset.n,o=['H','S','I','A'];cur.pres[n]=o[(o.indexOf(cur.pres[n])+1)%4];b.className='p '+cur.pres[n];b.textContent=cur.pres[n];rekap()});
+ rekap()}
+function cnt(p){const c={H:0,S:0,I:0,A:0};Object.values(p).forEach(v=>c[v]++);return c}
+function rekap(){const c=cnt(cur.pres);$('rek').textContent=`H ${c.H} • S ${c.S} • I ${c.I} • A ${c.A}`}
+$('kls').onchange=()=>{cur.pres={};renderPres()};
+function renderFoto(){$('fth').innerHTML=cur.fotos.map((p,i)=>`<div><img src="${p.d}" alt="foto"><button data-r="${i}">×</button></div>`).join('');$('fth').querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{cur.fotos.splice(+b.dataset.r,1);renderFoto()})}
+$('fb').onclick=()=>$('fi').click();
+$('fi').onchange=async e=>{for(const f of e.target.files){if(cur.fotos.length>=3){toast('Maksimal 3 foto per jurnal.');break}try{cur.fotos.push(await comp(f))}catch(x){toast('Foto tidak bisa dibaca.')}}e.target.value='';renderFoto()};
+$('allH').onclick=()=>{Object.keys(cur.pres).forEach(n=>cur.pres[n]='H');renderPres()};
+
+const cv=$('sig'),cx=cv.getContext('2d');let drawing=false,dirty=false,lx=0,ly=0,lw=0;
+function sizeSig(){const r=cv.getBoundingClientRect();if(!r.width||(r.width===lw&&cv.width))return;
+ const d=Math.min(window.devicePixelRatio||1,2),keep=dirty?cv.toDataURL():null;lw=r.width;
+ cv.width=r.width*d;cv.height=r.height*d;cx.setTransform(d,0,0,d,0,0);
+ cx.fillStyle='#fff';cx.fillRect(0,0,r.width,r.height);cx.lineWidth=2.4;cx.lineCap=cx.lineJoin='round';cx.strokeStyle=cx.fillStyle='#111';
+ if(keep){const im=new Image();im.onload=()=>{cx.save();cx.setTransform(1,0,0,1,0,0);cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);cx.drawImage(im,0,0,cv.width,cv.height);cx.restore()};im.src=keep}}
+function pt(e){const r=cv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]}
+cv.onpointerdown=e=>{e.preventDefault();cv.setPointerCapture(e.pointerId);drawing=dirty=true;[lx,ly]=pt(e);cx.beginPath();cx.arc(lx,ly,1.2,0,7);cx.fill()};
+cv.onpointermove=e=>{if(!drawing)return;const[x,y]=pt(e);cx.beginPath();cx.moveTo(lx,ly);cx.lineTo(x,y);cx.stroke();lx=x;ly=y};
+cv.onpointerup=cv.onpointercancel=()=>{drawing=false};
+function clearSig(){cx.save();cx.setTransform(1,0,0,1,0,0);cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);cx.restore();dirty=false}
+function sigData(){return dirty?cv.toDataURL('image/png'):''}
+$('sgc').onclick=clearSig;window.addEventListener('resize',sizeSig);
+
+$('sv').onclick=async()=>{
+ const kelas=$('kls').value,jam=[...document.querySelectorAll('#jam input:checked')].map(x=>+x.value),mat=$('mat').value.trim();
+ if(!kelas)return toast('Pilih kelas dulu (tab Pengaturan).');
+ if(!jam.length)return toast('Pilih jam ke berapa.');
+ if(!mat)return toast('Isi materi pembelajaran.');
+ if(!dirty)return toast('Tanda tangan dulu di kotak tanda tangan.');
+ const J={id:Date.now(),tgl:$('tgl').value,kelas,jam:jam.join(','),materi:mat,pres:{...cur.pres},cat:$('cat').value.trim(),ttd:sigData(),nf:cur.fotos.length};S.jurnal.push(J);
+ if(!save()){S.jurnal.pop();return}
+ let ok=true;if(cur.fotos.length)try{await fput(J.id,cur.fotos)}catch(e){ok=false}
+ cur={pres:{},fotos:[]};$('mat').value='';$('cat').value='';renderJam();clearSig();renderPres();renderFoto();toast(ok?'Jurnal tersimpan ✓':'Jurnal tersimpan, tetapi foto gagal disimpan.')};
+
+function filt(){const a=$('dr').value,b=$('sd').value;return S.jurnal.filter(j=>(!a||j.tgl>=a)&&(!b||j.tgl<=b)).sort((x,y)=>x.tgl===y.tgl?x.id-y.id:x.tgl<y.tgl?-1:1)}
+function renderList(){
+ const L=filt().reverse();$('cnt').textContent=L.length+' jurnal';
+ $('lst').innerHTML=L.length?L.map(j=>{const c=cnt(j.pres),tdk=Object.entries(j.pres).filter(([,v])=>v!=='H').map(([n,v])=>`${esc(n)} (${v})`).join(', ');
+ return `<div class="c"><div class="row" style="justify-content:space-between"><b>${esc(j.kelas)} • Jam ${esc(j.jam)}</b><button class="b d x" data-d="${j.id}">Hapus</button></div>
+ <div class="mu">${hari(j.tgl)}, ${tglID(j.tgl)}</div><div style="margin:6px 0">${esc(j.materi)}</div>
+ <span class="tag">H ${c.H}</span><span class="tag">S ${c.S}</span><span class="tag">I ${c.I}</span><span class="tag">A ${c.A}</span>
+ ${tdk?`<div class="mu" style="margin-top:6px">Tidak hadir: ${tdk}</div>`:''}${j.cat?`<div style="margin-top:6px"><span class="mu">Catatan:</span> ${esc(j.cat)}</div>`:''}
+ ${j.nf?`<div class="th" data-f="${j.id}"></div>`:''}${j.ttd?`<div style="margin-top:8px"><span class="mu">Tanda tangan:</span><br><img class="ttd" src="${j.ttd}" alt="tanda tangan"></div>`:''}</div>`}).join(''):'<div class="c mu">Belum ada jurnal pada rentang ini.</div>';
+ $('lst').querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{ask('Hapus jurnal ini?',()=>{S.jurnal=S.jurnal.filter(j=>j.id!==+b.dataset.d);fdel(+b.dataset.d);save();renderList()})});
+ $('lst').querySelectorAll('[data-f]').forEach(async el=>{const F=await fget(+el.dataset.f);el.innerHTML=F.map(p=>`<div><img src="${p.d}" alt="foto"></div>`).join('')})}
+$('dr').onchange=$('sd').onchange=renderList;
+
+$('xl').onclick=async()=>{
+ const L=filt();if(!L.length)return toast('Tidak ada data untuk diunduh.');
+ if(typeof ExcelJS==='undefined')return toast('Library Excel belum termuat. Sambungkan internet lalu muat ulang halaman.');
+ toast('Menyiapkan file Excel…');
+ try{
+ const nm={H:'Hadir',S:'Sakit',I:'Izin',A:'Alpa'},wb=new ExcelJS.Workbook(),w1=wb.addWorksheet('Jurnal'),w2=wb.addWorksheet('Presensi Detail');
+ w1.addRow(['No','Hari','Tanggal','Guru','Mata Pelajaran','Kelas','Jam ke','Materi','Hadir','Sakit','Izin','Alpa','Siswa Tidak Hadir','Catatan','Tanda Tangan','Foto']);
+ w2.addRow(['Tanggal','Kelas','Jam ke','Materi','No','Nama Siswa','Status']);
+ [5,10,12,18,18,8,8,36,7,7,7,7,34,36,12,48].forEach((x,i)=>w1.getColumn(i+1).width=x);
+ [12,8,8,36,5,26,10].forEach((x,i)=>w2.getColumn(i+1).width=x);
+ w1.getRow(1).font=w2.getRow(1).font={bold:true};
+ for(let i=0;i<L.length;i++){const j=L[i],c=cnt(j.pres);
+  const r=w1.addRow([i+1,hari(j.tgl),j.tgl,S.guru,S.mapel,j.kelas,j.jam,j.materi,c.H,c.S,c.I,c.A,Object.entries(j.pres).filter(([,v])=>v!=='H').map(([n,v])=>`${n} (${nm[v]})`).join('; '),j.cat,j.ttd?'Sudah':'Belum']);
+  r.alignment={vertical:'top',wrapText:true};
+  Object.entries(j.pres).forEach(([n,v],k)=>w2.addRow([j.tgl,j.kelas,j.jam,j.materi,k+1,n,nm[v]]));
+  const F=j.nf?await fget(j.id):[];
+  if(F.length){r.height=84;F.forEach((p,k)=>{const q=Math.min(100/p.w,100/p.h),id=wb.addImage({base64:p.d.split(',')[1],extension:'jpeg'});w1.addImage(id,{tl:{col:15+k*0.33,row:i+1.03},ext:{width:p.w*q,height:p.h*q}})})}}
+ const buf=await wb.xlsx.writeBuffer();
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));a.download='jurnal-mengajar-'+today()+'.xlsx';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('File Excel diunduh ✓')
+ }catch(e){toast('Gagal membuat Excel: '+(e.message||e))}};
+
+function renderSet(){
+ $('gn').value=S.guru;$('mp').value=S.mapel;$('sk').value=S.sekolah;
+ $('kl').innerHTML=S.kelas.map((k,i)=>`<div class="s"><span><b>${esc(k.n)}</b> <span class="mu">${k.s.length} siswa</span></span><span class="row"><button class="b g x" data-e="${i}">Ubah</button><button class="b d x" data-x="${i}">Hapus</button></span></div>`).join('')||'<div class="mu">Belum ada kelas.</div>';
+ $('kl').querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{const k=S.kelas[+b.dataset.e];$('kn').value=k.n;$('ks').value=k.s.join('\n');window.scrollTo(0,0)});
+ $('kl').querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{ask('Hapus kelas ini? Jurnal lama tetap tersimpan.',()=>{S.kelas.splice(+b.dataset.x,1);save();renderSet()})})}
+['gn','mp','sk'].forEach((id,i)=>$(id).oninput=e=>{S[['guru','mapel','sekolah'][i]]=e.target.value;save();head()});
+$('kadd').onclick=()=>{const n=$('kn').value.trim(),s=$('ks').value.split('\n').map(x=>x.trim()).filter(Boolean);
+ if(!n||!s.length)return toast('Isi nama kelas dan minimal satu siswa.');
+ const i=S.kelas.findIndex(k=>k.n===n);i>=0?S.kelas[i].s=s:S.kelas.push({n,s});
+ save();$('kn').value='';$('ks').value='';renderSet();toast('Kelas tersimpan ✓')};
+
+$('tgl').value=today();renderJam();renderForm();head();sizeSig();
+</script></body></html>
